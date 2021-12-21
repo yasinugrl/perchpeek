@@ -5,6 +5,7 @@ import { getLocations, LandMarks, updateLocation } from '../redux/LocationReduce
 import { SharedElement } from 'react-navigation-shared-element';
 import MapView, { Marker } from 'react-native-maps';
 import colors from '../styles/colors'
+
 interface ListScreenProps {
     navigation: any
 }
@@ -26,9 +27,9 @@ const ListScreen = (props: ListScreenProps) => {
                 <SharedElement id={`item.${item.id}.photo`}>
                     <Image source={{ uri: item.image }} style={{ width: '100%', height: '100%', borderRadius: 20 }} />
                 </SharedElement>
-                <Text style={{ width: 120, position: 'absolute', color: colors.white, bottom: 10, left: 10, fontSize: 25, fontWeight: 'bold' }}>{item.name}</Text>
-
-
+                <SharedElement id={`item.${item.id}.name`}>
+                    <Text style={{ width: 120, position: 'absolute', color: colors.white, bottom: 10, left: 10, fontSize: 25, fontWeight: 'bold' }}>{item.name}</Text>
+                </SharedElement>
                 <TouchableOpacity onPress={() => dispatch(updateLocation(item.id))} style={{ width: 30, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 10, right: 10, backgroundColor: colors.white, }}>
                     <Image source={require('../assets/heart.png')} style={{ width: 20, height: 20, tintColor: item.isLike ? colors.red : colors.gray }} resizeMode='contain' />
                 </TouchableOpacity>
@@ -55,19 +56,13 @@ const ListScreen = (props: ListScreenProps) => {
                                 onPress={() => {
                                     setSelected(item.id)
                                     refContainer.current.scrollToIndex({ animated: true, index: item.id - 1 });
-                                    refMap.current.animateToRegion({
-                                        latitude: item.latlng.latitude,
-                                        longitude: item.latlng.longitude,
-                                        latitudeDelta: 0.1,
-                                        longitudeDelta: 0.1,
-                                    });
                                 }}
                                 key={item.id}
                                 coordinate={item.latlng}
                             >
                                 <View style={{ padding: 10, width: 50, height: 50 }}>
                                     <Image source={require('../assets/marker.png')} style={{ width: 40, height: 40, tintColor: item.id == selected ? colors.blue : colors.gray }} resizeMode='contain' />
-                                    {item.isLike && <Image source={require('../assets/heart.png')} style={{ width: 20, height: 20, position: 'absolute', top: 5, left: 10  }} resizeMode='contain' />}
+                                    {item.isLike && <Image source={require('../assets/heart.png')} style={{ width: 20, height: 20, position: 'absolute', top: 5, left: 10 }} resizeMode='contain' />}
 
                                 </View>
                             </Marker>
