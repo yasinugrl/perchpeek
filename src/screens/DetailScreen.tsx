@@ -28,26 +28,13 @@ const DetailScreen = (props: DetailScreenProps) => {
 
     return (
         <View style={styles.wrapper}>
-            <Animated.View
-                style={{
-                    opacity,
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                    right: 10,
-                    zIndex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                }}
-            >
-
+            <Animated.View style={[styles.animatedViewStyle, { opacity}]}>
                 <TouchableOpacity onPress={() => {
                     setIsLike(!isLike)
                     dispatch(updateLocation(item.id))
-                }} style={{ width: 30, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 50, right: 20, backgroundColor: 'white', }}>
-                    <Image source={require('../assets/heart.png')} style={{ width: 20, height: 20, tintColor: isLike ? 'red' : 'gray' }} resizeMode='contain' />
+                }} style={styles.likeContainer}>
+                    <Image source={require('../assets/heart.png')} style={[styles.like, { tintColor: isLike ? 'red' : 'gray'}]} resizeMode='contain' />
                 </TouchableOpacity>
-
             </Animated.View>
 
             <SharedElement id={`item.${item.id}.photo`}>
@@ -60,18 +47,12 @@ const DetailScreen = (props: DetailScreenProps) => {
                 </SharedElement>
 
                 <ScrollView style={{ flex: 1 }}>
-                    <Animated.Text
-                        style={{
-                            marginTop: 20,
-                            opacity,
-                            fontSize: 12,
-                        }}
-                    >
+                    <Animated.Text style={[styles.animatedText, { opacity}]}>
                         {item.description}
                     </Animated.Text>
                 </ScrollView>
-                <TouchableOpacity onPress={() => props.navigation.goBack()} style={{ width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: -20, right: 20, backgroundColor: 'white', }}>
-                    <Image source={require('../assets/down.png')} style={{ width: 20, height: 20, tintColor: '#559df5' }} resizeMode='contain' />
+                <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.closeButtonContainer}>
+                    <Image source={require('../assets/down.png')} style={styles.closeImage} resizeMode='contain' />
                 </TouchableOpacity>
             </View>
         </View>
@@ -82,23 +63,14 @@ export default DetailScreen;
 
 const styles = StyleSheet.create({
     container: {},
-    wrapper: {
-        flex: 1,
-    },
-    postDetails: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        flex: 1
-    },
-    postTitle: {
-        fontSize: 35,
-        fontWeight: 'bold',
-    },
-    postPrice: {
-        fontSize: 24,
-    },
-    postImage: {
-        height: 300,
-        width: '100%',
-    },
+    wrapper: { flex: 1,},
+    postDetails: { paddingVertical: 10, paddingHorizontal: 10, flex: 1},
+    postTitle: { fontSize: 35, fontWeight: 'bold' },
+    postImage: { height: 300, width: '100%', },
+    animatedViewStyle: { position: 'absolute', top: 10, left: 10, right: 10, zIndex: 1,flexDirection: 'row', justifyContent: 'space-between' },
+    likeContainer: { width: 30, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 50, right: 20, backgroundColor: 'white', },
+    like: { width: 20, height: 20 },
+    animatedText: { marginTop: 20, fontSize: 12 },
+    closeImage: { width: 20, height: 20, tintColor: '#559df5' },
+    closeButtonContainer: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: -20, right: 20, backgroundColor: 'white', }
 });

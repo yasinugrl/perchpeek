@@ -15,8 +15,6 @@ type SharedStackParams = {
 const { Navigator, Screen } = createSharedElementStackNavigator<SharedStackParams>();
 
 function Router() {
-
-
     return (
         <NavigationContainer>
             <Navigator initialRouteName="List" headerMode='none'>
