@@ -17,7 +17,14 @@ function Router() {
                     component={DetailScreen}
                     sharedElementsConfig={(route, otherRoute, showing) => {
                         const { item } = route.params;
-                        return [`item.${item.id}.photo`];
+                        return [
+                            {
+                                id: `item.${item.id}.photo`,
+                                // animation: 'fade',
+                                // resize: 'clip',
+                                // align: 'left-top'
+                              },
+                        ];
                     }}
                 />
             </RootStack.Navigator>
