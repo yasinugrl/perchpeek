@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, StyleSheet, Image, Animated, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View, StyleSheet, Image, Animated, TouchableOpacity, ScrollView } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { useDispatch } from 'react-redux';
 import { updateLocation } from '../redux/LocationReducers';

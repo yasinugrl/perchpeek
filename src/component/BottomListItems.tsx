@@ -1,4 +1,4 @@
-import React, { useRef} from 'react';
+import React, { useRef } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import colors from '../styles/colors';
 
 interface BottomListItemsProps {
     refContainer: any
- }
+}
 
 const BottomListItems = (props: BottomListItemsProps) => {
 
@@ -17,17 +17,19 @@ const BottomListItems = (props: BottomListItemsProps) => {
 
     const renderItem = ({ item }) => {
         return (
-            <TouchableOpacity activeOpacity={0.8} onPress={() => props.navigation.push('Detail', { item })} style={styles.renderItemContainer}>
-                <SharedElement id={`item.${item.id}.photo`}>
-                    <Image source={{ uri: item.image }} style={styles.imageStyle} />
-                </SharedElement>
-                <SharedElement id={`item.${item.id}.name`}>
-                    <Text style={styles.nameStyle}>{item.name}</Text>
-                </SharedElement>
-                <TouchableOpacity onPress={() => dispatch(updateLocation(item.id))} style={styles.likeContainerStyle}>
-                    <Image source={require('../assets/heart.png')} style={[styles.likeImageStyle, { tintColor: item.isLike ? colors.red : colors.gray }]} resizeMode='contain' />
+            <View testID='dataItem'>
+                <TouchableOpacity testID={`press${item.id}`}activeOpacity={0.8} onPress={() => props.navigation.push('Detail', { item })} style={styles.renderItemContainer}>
+                    <SharedElement id={`item.${item.id}.photo`}>
+                        <Image source={{ uri: item.image }} style={styles.imageStyle} />
+                    </SharedElement>
+                    <SharedElement id={`item.${item.id}.name`}>
+                        <Text style={styles.nameStyle}>{item.name}</Text>
+                    </SharedElement>
+                    <TouchableOpacity onPress={() => dispatch(updateLocation(item.id))} style={styles.likeContainerStyle}>
+                        <Image testID={`${item.id}.CLICK`} source={require('../assets/heart.png')} style={[styles.likeImageStyle, { tintColor: item.isLike ? colors.red : colors.gray }]} resizeMode='contain' />
+                    </TouchableOpacity>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
         )
     }
 
@@ -35,6 +37,7 @@ const BottomListItems = (props: BottomListItemsProps) => {
     return (
         <View style={styles.listContainer}>
             <FlatList
+                testID='List'
                 ref={props.refContainer}
                 showsHorizontalScrollIndicator={false}
                 horizontal

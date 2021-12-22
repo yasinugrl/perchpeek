@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocations, LandMarks, updateLocation } from '../redux/LocationReducers';
-import { SharedElement } from 'react-navigation-shared-element';
 import MapView, { Marker } from 'react-native-maps';
+import { getLocations, LandMarks, updateLocation } from '../redux/LocationReducers';
 import colors from '../styles/colors'
 import BottomListItems from '../component/BottomListItems';
+import {store} from '../redux/Store';
+
 
 interface ListScreenProps {
     navigation: any
@@ -20,12 +21,17 @@ const ListScreen = (props: ListScreenProps) => {
 
     useEffect(() => {
         locations.length == 0 && dispatch(getLocations())
+        console.log('fff: ', store.getState().locationsResponse.locations[0]);
+        
     }, [])
 
     return (
-        <View style={styles.container}>
+        <View  
+        testID='container'
+        style={styles.container}>
             <MapView
                 ref={refMap}
+                testID='map'
                 style={styles.map}
                 region={{
                     latitude: 51.500782626551675,
@@ -38,6 +44,7 @@ const ListScreen = (props: ListScreenProps) => {
                     locations.map((item: LandMarks) => {
                         return (
                             <Marker
+                                testID='markers'
                                 onPress={() => {
                                     setSelected(item.id)
                                     refContainer.current.scrollToIndex({ animated: true, index: item.id - 1 });
@@ -64,7 +71,7 @@ const ListScreen = (props: ListScreenProps) => {
 
 export default ListScreen;
 const styles = StyleSheet.create({
-    container: { flex: 1, },
+    container: { flex: 1, backgroundColor: 'red' },
     map: { ...StyleSheet.absoluteFillObject },
     markerContainerStyle: { padding: 10, width: 50, height: 50 },
     markerImageStyle: { width: 40, height: 40 },
